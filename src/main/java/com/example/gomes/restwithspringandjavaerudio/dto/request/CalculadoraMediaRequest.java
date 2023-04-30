@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CalculadoraRequest {
+@AllArgsConstructor
+public class CalculadoraMediaRequest {
 
     private String numberOne;
     private String numberTwo;
+    private String media;
     private double result;
-
 }

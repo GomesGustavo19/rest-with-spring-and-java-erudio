@@ -11,5 +11,7 @@ public class CalculadoraResponse {
 
     private String numberOne;
     private String numberTwo;
+    private double result;
+
 
 }

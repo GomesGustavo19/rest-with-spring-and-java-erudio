@@ -1,6 +1,7 @@
 package com.example.gomes.restwithspringandjavaerudio.service;
 
 import com.example.gomes.restwithspringandjavaerudio.dto.Mapper.CalculadoraMapper;
+import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraMediaModel;
 import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraModel;
 import org.springframework.stereotype.Service;
 
@@ -8,23 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class CalculadoraService {
 
-    public Double somar(String numberOne, String numberTwo){
-        CalculadoraModel model = new CalculadoraModel();
-
-        model.setNumberOne(numberOne);
-        model.setNumberTwo(numberTwo);
-
-        String message = "a soma dos numeros é: ";
+    public CalculadoraModel somar(CalculadoraModel model) {
 
         Double result = CalculadoraMapper.toNumber(model.getNumberOne()) + CalculadoraMapper.toNumber(model.getNumberTwo());
 
-        System.out.println(message + result);
+        model.setResult(result);
 
-        return result;
+        return model;
 
     }
 
-    public Double dividir(String numberOne, String numberTwo){
+    public Double dividir(String numberOne, String numberTwo) {
         CalculadoraModel model = new CalculadoraModel();
 
         model.setNumberOne(numberOne);
@@ -40,7 +35,7 @@ public class CalculadoraService {
 
     }
 
-    public Double multiplicar(String numberOne, String numberTwo){
+    public Double multiplicar(String numberOne, String numberTwo) {
         CalculadoraModel model = new CalculadoraModel();
 
         model.setNumberOne(numberOne);
@@ -56,7 +51,7 @@ public class CalculadoraService {
 
     }
 
-    public Double subtracao(String numberOne, String numberTwo){
+    public Double subtracao(String numberOne, String numberTwo) {
         CalculadoraModel model = new CalculadoraModel();
 
         model.setNumberOne(numberOne);
@@ -72,9 +67,25 @@ public class CalculadoraService {
 
     }
 
-    public Double media(String numberOne, String numberTwo, String media){
+    public CalculadoraMediaModel media(String numberOne, String numberTwo, String media) {
 
-        return this.somar(numberOne,numberTwo) / CalculadoraMapper.toNumber(media);
+        CalculadoraMediaModel model = new CalculadoraMediaModel();
+
+        model.setNumberOne(numberOne);
+        model.setNumberTwo(numberTwo);
+
+        Double result = CalculadoraMapper.toNumber(model.getNumberOne()) + CalculadoraMapper.toNumber(model.getNumberTwo()) / CalculadoraMapper.toNumber(media);
+        model.setResult(result);
+
+        System.out.println(model.getResult());
+
+        return model;
+
+    }
+
+    public Double RaizQuadrada(String numberOne) {
+
+        return Math.sqrt(CalculadoraMapper.toNumber(numberOne));
 
     }
 

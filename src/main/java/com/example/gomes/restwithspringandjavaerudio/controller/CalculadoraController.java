@@ -1,6 +1,10 @@
 package com.example.gomes.restwithspringandjavaerudio.controller;
 
+import com.example.gomes.restwithspringandjavaerudio.dto.Mapper.CalculadoraMapper;
 import com.example.gomes.restwithspringandjavaerudio.dto.request.CalculadoraRequest;
+import com.example.gomes.restwithspringandjavaerudio.dto.response.CalculadoraResponse;
+import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraMediaModel;
+import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraModel;
 import com.example.gomes.restwithspringandjavaerudio.service.CalculadoraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +16,14 @@ public class CalculadoraController {
     @Autowired
     private CalculadoraService service;
 
-    @GetMapping(value = "somar")
-    public double somar(@RequestParam(value = "numberOne") String numberOne,
-                        @RequestParam(value = "numberTwo") String numberTwo){
+    @GetMapping(value = "soma")
+    public CalculadoraResponse soma(@RequestBody CalculadoraRequest request){
 
-        CalculadoraRequest request = new CalculadoraRequest();
-        request.setNumberOne(numberOne);
-        request.setNumberTwo(numberTwo);
+        CalculadoraModel model = CalculadoraMapper.toCalculadora(request);
+        CalculadoraModel modelCalculado = service.somar(model);
+        CalculadoraResponse response = CalculadoraMapper.toCalculadoraResponse(modelCalculado);
 
-        return service.somar(request.getNumberOne(), request.getNumberTwo());
+        return response;
 
     }
 
@@ -41,7 +44,18 @@ public class CalculadoraController {
                         @RequestParam(value = "numberTwo") String numberTwo,
                         @RequestParam(value = "media") String media){
 
-        return service.media(numberOne, numberTwo, media);
+        CalculadoraMediaModel model = new CalculadoraMediaModel();
+
+        service.media(numberOne, numberTwo, media);
+
+        return model.getResult();
+
+    }
+
+    @GetMapping(value = "raiz")
+    public double raizquadrada(@RequestParam(value = "numberOne") String numberOne){
+
+        return service.RaizQuadrada(numberOne);
 
     }
 
