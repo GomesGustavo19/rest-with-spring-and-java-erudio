@@ -1,10 +1,15 @@
 package com.example.gomes.restwithspringandjavaerudio.controller;
 
 import com.example.gomes.restwithspringandjavaerudio.dto.Mapper.CalculadoraMapper;
+import com.example.gomes.restwithspringandjavaerudio.dto.request.CalculadoraMediaRequest;
+import com.example.gomes.restwithspringandjavaerudio.dto.request.CalculadoraRaizRequest;
 import com.example.gomes.restwithspringandjavaerudio.dto.request.CalculadoraRequest;
+import com.example.gomes.restwithspringandjavaerudio.dto.response.CalculadoraMediaResponse;
+import com.example.gomes.restwithspringandjavaerudio.dto.response.CalculadoraRaizResponse;
 import com.example.gomes.restwithspringandjavaerudio.dto.response.CalculadoraResponse;
 import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraMediaModel;
 import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraModel;
+import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraRaizModel;
 import com.example.gomes.restwithspringandjavaerudio.service.CalculadoraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +22,7 @@ public class CalculadoraController {
     private CalculadoraService service;
 
     @GetMapping(value = "soma")
-    public CalculadoraResponse soma(@RequestBody CalculadoraRequest request){
+    public CalculadoraResponse soma(@RequestBody CalculadoraRequest request) {
 
         CalculadoraModel model = CalculadoraMapper.toCalculadora(request);
         CalculadoraModel modelCalculado = service.somar(model);
@@ -28,34 +33,35 @@ public class CalculadoraController {
     }
 
     @GetMapping(value = "dividir")
-    public double dividir(@RequestParam(value = "numberOne") String numberOne,
-                          @RequestParam(value = "numberTwo") String numberTwo){
+    public CalculadoraResponse dividir(@RequestBody CalculadoraRequest request) {
 
-        CalculadoraRequest request = new CalculadoraRequest();
-        request.setNumberOne(numberOne);
-        request.setNumberTwo(numberTwo);
+        CalculadoraModel model = CalculadoraMapper.toCalculadora(request);
+        CalculadoraModel modelDividido = service.dividir(model);
+        CalculadoraResponse response = CalculadoraMapper.toCalculadoraResponse(modelDividido);
 
-        return service.dividir(request.getNumberOne(), request.getNumberTwo());
+        return response;
 
     }
 
     @GetMapping(value = "media")
-    public double media(@RequestParam(value = "numberOne") String numberOne,
-                        @RequestParam(value = "numberTwo") String numberTwo,
-                        @RequestParam(value = "media") String media){
+    public CalculadoraMediaResponse media(@RequestBody CalculadoraMediaRequest request) {
 
-        CalculadoraMediaModel model = new CalculadoraMediaModel();
+        CalculadoraMediaModel model = CalculadoraMapper.toCalculadoraMedia(request);
+        CalculadoraMediaModel modelMedia = service.media(model);
+        CalculadoraMediaResponse response = CalculadoraMapper.toCalculadoraMediaResponse(modelMedia);
 
-        service.media(numberOne, numberTwo, media);
-
-        return model.getResult();
+        return response;
 
     }
 
     @GetMapping(value = "raiz")
-    public double raizquadrada(@RequestParam(value = "numberOne") String numberOne){
+    public CalculadoraRaizResponse raizquadrada(@RequestBody CalculadoraRaizRequest request) {
 
-        return service.RaizQuadrada(numberOne);
+        CalculadoraRaizModel model = CalculadoraMapper.toCalculadoraRaiz(request);
+        CalculadoraRaizModel modelRaiz = service.raiz(model);
+        CalculadoraRaizResponse response = CalculadoraMapper.toCalculadoraRaizResponse(modelRaiz);
+
+        return response;
 
     }
 

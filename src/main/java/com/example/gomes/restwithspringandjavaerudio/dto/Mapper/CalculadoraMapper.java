@@ -1,12 +1,15 @@
 package com.example.gomes.restwithspringandjavaerudio.dto.Mapper;
 
 import com.example.gomes.restwithspringandjavaerudio.dto.request.CalculadoraMediaRequest;
+import com.example.gomes.restwithspringandjavaerudio.dto.request.CalculadoraRaizRequest;
 import com.example.gomes.restwithspringandjavaerudio.dto.request.CalculadoraRequest;
 import com.example.gomes.restwithspringandjavaerudio.dto.response.CalculadoraMediaResponse;
+import com.example.gomes.restwithspringandjavaerudio.dto.response.CalculadoraRaizResponse;
 import com.example.gomes.restwithspringandjavaerudio.dto.response.CalculadoraResponse;
 import com.example.gomes.restwithspringandjavaerudio.exception.UnsupportedCaracterMathException;
 import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraMediaModel;
 import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraModel;
+import com.example.gomes.restwithspringandjavaerudio.model.CalculadoraRaizModel;
 import org.json.simple.JSONObject;
 
 
@@ -80,6 +83,18 @@ public class CalculadoraMapper {
 
     }
 
+    public static CalculadoraRaizResponse toCalculadoraRaizResponse(CalculadoraRaizModel model){
+
+        CalculadoraRaizResponse response = new CalculadoraRaizResponse();
+        JSONObject responseJson = new JSONObject();
+
+        model.setNumberOne(model.getNumberOne());
+        responseJson.put("Resultado", model.getNumberOne());
+
+        return response;
+
+    }
+
     public static CalculadoraModel toCalculadora(CalculadoraRequest request) {
         CalculadoraModel model = new CalculadoraModel();
 
@@ -98,6 +113,14 @@ public class CalculadoraMapper {
 
         return model;
 
+    }
+
+    public static CalculadoraRaizModel toCalculadoraRaiz(CalculadoraRaizRequest request){
+        CalculadoraRaizModel model = new CalculadoraRaizModel();
+
+        model.setNumberOne(model.getNumberOne());
+
+        return model;
     }
 
 }
